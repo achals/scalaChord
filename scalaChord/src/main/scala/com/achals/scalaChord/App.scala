@@ -1,15 +1,17 @@
 package com.achals.scalaChord
 
+import akka.actor.ActorRef
+import com.achals.scalaChord.Node.ChordNode
+
 /**
- * @author ${user.name}
+ * @author Achal Shah
  */
 object App {
   
-  def foo(x : Array[String]) = x.foldLeft("")((a,b) => a + b)
-  
   def main(args : Array[String]) {
-    println( "Hello World!" )
-    println("concat arguments = " + foo(args))
+	  val actor1 = ChordNode
+	  println (actor1.toString())
+	  val actor2 = ChordNode
   }
 
 }

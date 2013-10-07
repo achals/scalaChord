@@ -5,17 +5,15 @@ import com.achals.scalaChord.data.ID
 
 object FingerTable {
 	def apply() = {
-	  //new FingerTable()
+	  new FingerTable()
 	}
 }
 
-abstract class FingerTable {
+class FingerTable {
   
 	val fingetTableMap: mutable.Map[String, String] = mutable.Map.empty
   
-	def successor: ID
+	/*def successor: ID
 	def predecessor:ID
-	def number: Int
-	
-	def FingerTable() = {}
+	def number: Int*/
 }
