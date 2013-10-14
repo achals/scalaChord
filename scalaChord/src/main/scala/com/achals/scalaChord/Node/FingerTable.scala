@@ -9,7 +9,7 @@ object FingerTable {
 	}
 }
 
-class FingerTable {
+class FingerTable() {
   
 	val fingetTableMap: mutable.Map[String, String] = mutable.Map.empty
   

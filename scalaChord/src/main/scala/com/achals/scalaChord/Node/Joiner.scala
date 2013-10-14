@@ -1,18 +1,17 @@
 package com.achals.scalaChord.Node
 
-import akka.actor.Actor
+import akka.actor.{Actor, Props}
 
 import com.achals.scalaChord.Messages
 import com.achals.scalaChord.data.ID
 
 object Joiner {
-  def apply() = {
-    new Joiner()
-  }
+  def props(name:String) = Props(classOf[Joiner], name)
 }
 
-class Joiner extends Actor {
+class Joiner(name:String) extends Actor {
 
+  val joinerName = name
   def receive = {
     case Messages.Join(remote) => {
       println("Sender is: " + sender.toString)

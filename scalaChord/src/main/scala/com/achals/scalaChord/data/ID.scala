@@ -6,7 +6,7 @@ object ID {
 
 class ID (input:String){
 
-  val intValue:Integer = input.toInt
+  //val intValue:Integer = input.toInt
   val key:String = input
 
 }
