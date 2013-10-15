@@ -1,20 +1,26 @@
 package com.achals.scalaChord.Node
 
 import com.achals.scalaChord.data.ID
-import com.achals.scalaChord.Messages
+import com.achals.scalaChord.{ChordActorSystem, Messages}
 
 import akka.actor.{Actor, Props, ActorRef}
 
 object ChordNode{
+  
+  def apply(name:String) = {
+    new ChordNode(name)
+  }
+  
   def props(name:String) = Props(classOf[ChordNode], name)
 }
 
-class ChordNode(name:String) extends Actor {
+class ChordNode(name:String) {
 	
     val nodeName = name
 	val FingerTable:FingerTable = FingerTable
-	val joiner = context.actorOf(Joiner.props(nodeName + "joiner"))
+	val joiner = ChordActorSystem.getActor(Joiner.props(nodeName + "joiner"))
 	
+	val actorRef = joiner.toString
 	//All temp functions - have to filled in.
 	
 	def lookup(key:String) :ID = {
@@ -32,7 +38,7 @@ class ChordNode(name:String) extends Actor {
 	def join(bootStrap: ChordNode): Unit = {
 	}
 	def join(actorRef: ActorRef): Unit = {
-	  actorRef ! Messages.Join
+	  actorRef ! Messages.Join(ID(this.actorRef))
 	}
 	
 	def stabilize:Unit = {}
@@ -40,12 +46,5 @@ class ChordNode(name:String) extends Actor {
 	 
 	def fix_fingers:Unit = {}
 	def check_predecessor:Unit = {}
-	
-	def receive ={
-	  case Messages.Join(source:ID) => {
-	    println(source.key)
-	  }
-	  case _ => ()
-	}
 	
 }
