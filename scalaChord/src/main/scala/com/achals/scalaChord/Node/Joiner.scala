@@ -14,6 +14,7 @@ class Joiner(name:String) extends Actor {
   val joinerName = name
   def receive = {
     case Messages.Join(remote) => {
+      println("Remote is" + remote)
       println("Sender is: " + sender.toString)
       sender ! Messages.JoinSuccess
     }

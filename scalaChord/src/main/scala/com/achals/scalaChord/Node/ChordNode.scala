@@ -38,7 +38,7 @@ class ChordNode(name:String) {
 	def join(bootStrap: ChordNode): Unit = {
 	}
 	def join(actorRef: ActorRef): Unit = {
-	  actorRef ! Messages.Join(ID(this.actorRef))
+	  actorRef.tell(Messages.Join(ID(this.joiner.toString)), joiner)
 	}
 	
 	def stabilize:Unit = {}
