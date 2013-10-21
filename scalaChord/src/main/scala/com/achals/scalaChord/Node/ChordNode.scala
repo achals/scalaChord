@@ -14,7 +14,7 @@ object ChordNode{
   def props(name:String) = Props(classOf[ChordNode], name)
 }
 
-class ChordNode(name:String) {
+class ChordNode(name:String) extends Node {
 	
     val nodeName = name
 	val FingerTable:FingerTable = FingerTable
@@ -35,14 +35,14 @@ class ChordNode(name:String) {
 	}
 	
 	def create: Unit = {}
-	def join(bootStrap: ChordNode): Unit = {
+	def join(bootStrap: Node): Unit = {
 	}
 	def join(actorRef: ActorRef): Unit = {
 	  actorRef.tell(Messages.Join(ID(this.joiner.toString)), joiner)
 	}
 	
 	def stabilize:Unit = {}
-	def notify(possiblePred:ChordNode): Unit = {}
+	def notify(possiblePred:Node): Unit = {}
 	 
 	def fix_fingers:Unit = {}
 	def check_predecessor:Unit = {}
