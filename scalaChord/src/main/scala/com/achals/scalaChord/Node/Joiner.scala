@@ -9,17 +9,18 @@ object Joiner {
   def props(name:String) = Props(classOf[Joiner], name)
 }
 
-class Joiner(name:String) extends Actor {
-
+class Joiner(name:String) extends Actor {  
+  
   val joinerName = name
   def receive = {
     case Messages.Join(remote) => {
-      println("Remote is" + remote)
+      println("Remote is: " + remote)
       println("Sender is: " + sender.toString)
+      context.parent ! (Messages.Join(remote), remote)
       sender ! Messages.JoinSuccess
     }
     case Messages.JoinSuccess => {
-      println("Joing succeeded.")
+      println("Joining succeeded.")
     }
   }
   

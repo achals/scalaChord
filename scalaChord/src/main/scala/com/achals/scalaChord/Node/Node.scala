@@ -1,6 +1,6 @@
 package com.achals.scalaChord.Node
 
-import com.achals.scalaChord.data.ID
+import com.achals.scalaChord.data.{ID}
 
 abstract class Node {
 
@@ -12,10 +12,10 @@ abstract class Node {
 
 	def create: Unit
 
-	def join(bootStrap: Node): Unit
+	def join(bootStrap: NodeRef): Unit
 
 	def stabilize:Unit
-	def notify(possiblePred:Node): Unit
+	def notify(possiblePred:NodeRef): Unit
 	 
 	def fix_fingers:Unit
 	def check_predecessor:Unit
