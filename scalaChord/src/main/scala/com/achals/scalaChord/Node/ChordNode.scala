@@ -3,6 +3,7 @@ package com.achals.scalaChord.Node
 import com.achals.scalaChord.data.{ID}
 import com.achals.scalaChord.{ChordActorSystem, Messages}
 import akka.actor.{Actor, Props, ActorRef}
+import com.achals.scalaChord.Utils.{ConsistentHash, Hash}
 
 object ChordNode{
   
@@ -13,24 +14,28 @@ object ChordNode{
   def props(name:String) = Props(classOf[ChordNode], name)
 }
 
-class ChordNode(name:String) extends Node with Actor {
+class ChordNode(name:String) extends Actor {
 	
+    //Initialize finger tables and names.
     val nodeName = name
 	val fingerTable:FingerTable = FingerTable()
-
-	//All temp functions - have to filled in.
+	val selfRef = NodeRef(self, new ConsistentHash().hash(self.path.toString()))
 	
+	//All temp functions - have to filled in.
 	def lookup(key:String) :ID = {
 	  new ID(key)
     }
     
-	def find_successor(key:String) :ID = {
-	  new ID(key)
+	def find_successor(key:String) : NodeRef = {
+	  NodeRef(null, null)
 	} 
 	def find_predecessor(key:String) :ID = {
-	  new ID(key)
+
+	  val nodeRef = fingerTable.closest_preceeding_finger(key)
+	  
+	  new ID(fingerTable.predecessor.nodeId)
 	}
-	
+
 	def receive ={
 	    case Messages.Join(remote) => {
 	      println("Remote is: " + remote)
@@ -45,6 +50,7 @@ class ChordNode(name:String) extends Node with Actor {
 	
 	def create: Unit = {}
 	def join(bootStrap: NodeRef): Unit = {
+	  bootStrap.nodeRef ! Messages.Join
 	}
 	def join(actorRef: ActorRef): Unit = {
 	  actorRef ! Messages.Join(ID(this.toString()))

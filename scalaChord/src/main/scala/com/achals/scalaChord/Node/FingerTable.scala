@@ -16,7 +16,20 @@ class FingerTable() {
 	def addNode(name:String, node:ActorRef) ={
 	  fingerTableMap.+=((name, NodeRef(node, node.toString)))
 	}
-	/*def successor: ID
-	def predecessor:ID
-	def number: Int*/
+
+	def successor: NodeRef= NodeRef(null, "")
+	def predecessor: NodeRef= NodeRef(null, "")
+	def minDistance(seed:String) = {
+	  (res: String, a:String) => {
+		  val seedVal: Int = Integer.parseInt(seed, 16)
+		  val resVal: Int = Integer.parseInt(res, 16)
+		  val aVal: Int = Integer.parseInt(a, 16)
+		  if ((seedVal - resVal).abs > (aVal - seedVal).abs)
+		  	aVal
+          else resVal
+	  }
+	}
+	def closest_preceeding_finger (key: String) = {
+
+	  fingerTableMap.keySet.reduceLeft(minDistance(key))
 }
